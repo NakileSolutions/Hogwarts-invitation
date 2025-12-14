@@ -1,0 +1,485 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:ital@0;1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'EB Garamond', serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========== SECTION DEVINETTE ========== */
+#riddle-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #f4d03f;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#riddle-text {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    line-height: 2;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+#answer-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 2px solid #f4d03f;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+    font-family: 'EB Garamond', serif;
+    color: #2c1810;
+}
+
+#answer-input:focus {
+    outline: none;
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(244, 208, 63, 0.5);
+}
+
+#check-btn {
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    background: #8b0000;
+    color: #f4d03f;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    transition: all 0.3s;
+    font-weight: 700;
+}
+
+#check-btn:hover {
+    background: #a52a2a;
+    transform: scale(1.05);
+}
+
+#check-btn:active {
+    transform: scale(0.98);
+}
+
+#feedback {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-height: 30px;
+}
+
+/* ========== SECTION ENVELOPPE ========== */
+#envelope-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s ease-in;
+    padding: 2rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.envelope-wrapper {
+    position: relative;
+    width: 450px;
+    height: 500px;
+    cursor: pointer;
+}
+
+.animated-mail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 250px;
+    width: 400px;
+    transition: .6s;
+}
+
+.animated-mail.open {
+    animation: envelopeDown 1.5s ease-in-out forwards;
+}
+
+@keyframes envelopeDown {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        transform: translate(-50%, calc(-50% + 150px));
+    }
+}
+/* Corps principal (triangle du bas) */
+.body {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 200px 400px;
+    border-color: transparent transparent #e8dcc4 transparent;
+    z-index: 2;
+}
+
+/* Rabat du haut qui s'ouvre */
+.top-fold {
+    position: absolute;
+    top: 50px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100px 200px 0 200px;
+    transform-origin: 50% 0%;
+    transition: transform .6s .4s, z-index .2s .4s;
+    border-color: #d4af37 transparent transparent transparent;
+    z-index: 3;
+}
+
+.animated-mail.open .top-fold {
+    transition: transform .6s, z-index .2s;
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+/* Rabat arrière fixe */
+.back-fold {
+    position: absolute;
+    bottom: 0;
+    width: 400px;
+    height: 200px;
+    background: #c19a6b;
+    z-index: 0;
+}
+
+/* Rabat gauche */
+.left-fold {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 100px 0 100px 200px;
+    border-color: transparent transparent transparent #d4c5a9;
+    z-index: 2;
+}
+
+/* Sceau de cire - positionné sur le rabat du haut */
+.wax-seal {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #8b0000 0%, #600000 100%);
+    border-radius: 50%;
+    border: 4px solid #4a0000;
+    z-index: 4;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    transition: opacity .3s;
+}
+
+.animated-mail.open .wax-seal {
+    opacity: 0;
+}
+
+/* Lettre qui sort */
+.letter {
+    left: 0px;
+    bottom: 0px;
+    position: absolute;
+    width: 380px;  /* Augmenté de 320px à 380px */
+    height: 120px;
+    background: #f9f6f0;
+    z-index: 1;
+    overflow: hidden;
+    transition: none;
+    border: 2px solid #8b7355;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.animated-mail.open .letter {
+    animation: letterSlideOut 1.5s ease-in-out forwards;
+}
+
+@keyframes letterSlideOut {
+    0% {
+        height: 120px;
+        bottom: 0px;
+        left: 10px;
+        transform: translateX(0);
+        z-index: 1;
+    }
+    50% {
+        height: 600px;  /* Augmenté de 500px à 600px */
+        bottom: 250px;  /* Ajusté pour sortir plus haut */
+        left: 10px;
+        transform: translateX(0);
+        z-index: 1;
+    }
+    100% {
+        height: 600px;  /* Augmenté de 500px à 600px */
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+}
+
+.letter-content {
+    padding: 2rem;  /* Augmenté de 1.5rem à 2rem */
+    color: #2c1810;
+    font-size: 1rem;  /* Augmenté de 0.9rem à 1rem */
+    line-height: 1.7;  /* Augmenté de 1.6 à 1.7 */
+    height: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #8b6914;
+}
+
+.crest {
+    font-size: 3.2rem;  /* Augmenté de 2.8rem à 3.2rem */
+    margin-bottom: 0.5rem;
+}
+
+.header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;  /* Augmenté de 0.85rem à 0.95rem */
+    color: #8b0000;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+}
+
+.dear {
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+}
+
+.letter-content p {
+    margin-bottom: 0.8rem;
+}
+
+.signature {
+    margin-top: 1.5rem;
+    font-style: italic;
+}
+
+/* Ombre */
+/* .shadow {
+    position: absolute;
+    top: 350px;
+    left: 50%;
+    width: 450px;
+    height: 30px;
+    transition: .6s;
+    transform: translateX(-50%);
+    border-radius: 100%;
+    background: radial-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.0), rgba(0,0,0,0.0));
+} */
+
+.animated-mail.open ~ .shadow {
+    width: 300px;
+}
+
+/* Effet de particules magiques */
+@keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+.envelope-wrapper::before,
+.envelope-wrapper::after {
+    content: '✨';
+    position: absolute;
+    font-size: 2rem;
+    animation: sparkle 2s infinite;
+    pointer-events: none;
+    z-index: 200;
+}
+
+.envelope-wrapper::before {
+    top: 5%;
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.envelope-wrapper::after {
+    bottom: 5%;
+    right: 5%;
+    animation-delay: 1s;
+}
+
+/* Animation de transition des énigmes */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.riddle-transition {
+    animation: slideDown 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    #riddle-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .envelope-wrapper {
+        width: 350px;
+        height: 450px;
+    }
+    
+    .animated-mail {
+        height: 200px;
+        width: 320px;
+    }
+    
+    .body {
+        border-width: 0 0 160px 320px;
+    }
+    
+    .top-fold {
+        top: 40px;
+        border-width: 80px 160px 0 160px;
+    }
+    
+    .back-fold {
+        width: 320px;
+        height: 160px;
+    }
+    
+    .left-fold {
+        border-width: 80px 0 80px 160px;
+    }
+    
+    .wax-seal {
+        top: 80px;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .letter {
+        left: 20px;
+        width: 280px;
+    }
+
+    .animated-mail.open {
+        transform: translate(-50%, calc(-50% + 100px));
+    }
+    
+    .animated-mail.open .letter {
+        height: 400px;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+    
+    .letter-content {
+        padding: 1.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .crest {
+        font-size: 2.2rem;
+    }
+    
+    .header h2 {
+        font-size: 0.75rem;
+    }
+
+    @keyframes letterSlideOut {
+        0% {
+            height: 96px;
+            bottom: 0px;
+            left: 20px;
+            transform: translateX(0);
+            z-index: 1;
+        }
+        50% {
+            height: 580px;
+            bottom: 200px;
+            left: 20px;
+            transform: translateX(0);
+            z-index: 1;
+        }
+        100% {
+            height: 580px;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+    }
+    
+    @keyframes envelopeDown {
+        0% {
+            transform: translate(-50%, -50%);
+        }
+        100% {
+            transform: translate(-50%, calc(-50% + 120px));
+        }
+    }
+}
